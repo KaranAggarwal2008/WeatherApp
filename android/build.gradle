@@ -34,5 +34,8 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+        mavenCentral()
+maven { url "https://android-sdk.is.com" }
+maven { url "https://sdk.tapjoy.com/" }
     }
 }

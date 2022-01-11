@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
-
+import { NativeModules } from 'react-native';
+const { Yodo1MASAds } = NativeModules;
 export default class WeatherScreen extends Component {
   constructor() {
     super();
@@ -11,13 +12,16 @@ export default class WeatherScreen extends Component {
 
   getWeather = async () => {
     //change latitude and longitude
+    Yodo1MASAds.initMasSdk()
     var url = 'https://fcc-weather-api.glitch.me/api/current?lat=35&lon=139';
     return fetch(url)
       .then(response => response.json())
       .then(responseJson => {
+        Yodo1MASAds.showInterstitialAds();
         this.setState({
           weather: responseJson,
         });
+
       })
       .catch(error => {
         console.error(error);
@@ -26,18 +30,25 @@ export default class WeatherScreen extends Component {
 
   componentDidMount = () => {
     this.getWeather();
+    Yodo1MASAds.initMasSdk()
   };
 
   render() {
     if (this.state.weather === '') {
       return (
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          Yodo1MASAds.showInterstitialAds();
+          Yodo1MASAds.showBannerAds();
+
         </View>
       );
     } else {
       return (
         <View style={styles.container}>
+          Yodo1MASAds.initMasSdk()
+          Yodo1MASAds.showBannerAds();
+          Yodo1MASAds.showInterstitialAds();
+
           <View style={styles.subContainer}>
             <Text style={styles.title}>
               Weather Forecast
